@@ -1,0 +1,135 @@
+#include <stdio.h>
+
+#define MAX_TICKETS 100
+
+typedef struct {
+    char cod[4];
+    char descripcion[30];
+    int stock;
+    int minStock;
+    float precioUnidad;
+    float descuento;
+}Producto;
+
+typedef struct {
+    int cod;
+    int fecha;
+    int hora;
+    float importeTotal;
+    int lineas;
+}Ticket;
+
+Producto productos[50];
+
+void altaProducto() {
+
+    Producto producto;
+
+    printf("Introduce el código del producto: ");
+    scanf("%s",&producto.cod);
+
+    for (int i = 0; i < 50; i++) {
+
+        if (producto.cod == productos[i].cod) {
+
+            printf("Código ya existente, introduce otro: ");
+            scanf("%s",&producto.cod);
+
+        }
+        
+    }
+
+    printf("Introduce la descripción del producto: ");
+    scanf("%s",&producto.descripcion
+;
+
+    for (int i = 0; i < 50; i++) {
+
+        if (producto.descripcion == productos[i].descripcion) {
+
+            printf("Descripción ya existente, introduce otra: ");
+            scanf("%s",&producto.descripcion);
+
+        }
+        
+    }
+
+    printf("Introduce el stock del producto: ");
+    scanf("%d",&producto.stock);
+
+    printf("Introduce el stock mínimo del producto: ");
+    scanf("%d",&producto.minStock);
+
+    printf("Introduce el precio por unidad del producto: ");
+    scanf("%f",&producto.precioUnidad);
+
+    printf("Introduce el descuento aplicado al producto: ");
+    scanf("%f",&producto.descuento);
+}
+
+void bajaProducto() {
+    
+    Producto producto;
+    
+    printf("Introduce el código del producto: ");
+    scanf("%s",&producto.cod);
+
+    for (int i = 0; i < 50; i++) {
+
+        if (producto.cod == productos[i].cod) {
+
+            printf("Datos del producto:\n");
+            printf
+
+        }
+        
+    }
+        
+}
+
+void crearnuevoticket(){
+char respuesta,confirmacion;
+int cont = 0,linea;
+do{
+printf("Introduce la línea de ticket:\n");
+scanf("%d",linea);
+
+printf("¿Desea añadir otra línea?:S/N: \n");
+scanf("%c",respuesta);
+
+if(respuesta == 'N'){
+
+    printf("Confirmación creación de ticket: S/N: \n");
+    scanf("%c",confirmacion);
+    
+}else if(respuesta == 'S'){
+
+
+    
+}
+
+cont++;
+}while(cont < 10);
+
+
+
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+int main() {
+
+    int ;
+
+    return 0;
+    
+}
