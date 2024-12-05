@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdbool.h>
 
+#define MAX_PRODUCTOS 50
 #define MAX_TICKETS 100
 
 typedef struct {
@@ -8,7 +10,7 @@ typedef struct {
     int stock;
     int minStock;
     float precioUnidad;
-    float descuento;
+    int descuento;
 }Producto;
 
 typedef struct {
@@ -19,7 +21,7 @@ typedef struct {
     int lineas;
 }Ticket;
 
-Producto productos[50];
+Producto productos[MAX_PRODUCTOS];
 
 void altaProducto() {
 
@@ -28,7 +30,7 @@ void altaProducto() {
     printf("Introduce el código del producto: ");
     scanf("%s",&producto.cod);
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
         if (producto.cod == productos[i].cod) {
 
@@ -43,7 +45,7 @@ void altaProducto() {
     scanf("%s",&producto.descripcion
 ;
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
         if (producto.descripcion == productos[i].descripcion) {
 
@@ -64,35 +66,166 @@ void altaProducto() {
     scanf("%f",&producto.precioUnidad);
 
     printf("Introduce el descuento aplicado al producto: ");
-    scanf("%f",&producto.descuento);
+    scanf("%d",&producto.descuento);
 }
 
 void bajaProducto() {
     
     Producto producto;
+    char confirmacionBaja;
+    bool productoExiste = false;
     
     printf("Introduce el código del producto: ");
     scanf("%s",&producto.cod);
 
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
         if (producto.cod == productos[i].cod) {
 
             printf("Datos del producto:\n");
-            printf
+            printf("Código: %s\n",producto.cod);
+            printf("Descripción: %s\n",producto.descripcion);
+            printf("Stock: %d\n",producto.stock);
+            printf("Stock mínimo: %d\n",producto.minStock);
+            printf("Precio por unidad: %.2f\n",producto.precioUnidad);
+            printf("Descuento del producto (en porcentaje): %d\n",producto.descuento);
+
+            printf("¿Seguro que quieres dar este producto de baja?\n");
+            printf("S/s/7 = Sí\n");
+            printf("Cualquier otra tecla = No\n");
+            printf("Elección: ");
+            scanf("%c",&confirmacionBaja);
+
+            productoExiste = true;
+
+            if (confirmacionBaja == 'S' || confirmacionBaja == 's' || confirmacionBaja == '7') {
+
+                ;
+                
+                printf("Producto eliminado\n");
+
+            } else {
+
+                printf("El producto no ha sido eliminado\n");
+
+            }
 
         }
         
     }
+
+    if (!productoExiste) {
+
+        printf("El codigo introducido no corresponde a ningún producto existente\n");
+
+    }
         
 }
 
+void modificarProducto() {
+
+    Producto producto;
+    bool productoExiste = false;
+
+    printf("Introduce el código de un producto: ");
+    scanf("%s",&producto.cod);
+
+    for (int i = 0; i < MAX_PRODUCTOS; i++) {
+
+        if (producto.cod == productos[i].cod) {
+
+            printf("Datos del producto:\n");
+            printf("Código: %s\n",producto.cod);
+            printf("Descripción: %s\n",producto.descripcion);
+            printf("Stock: %d\n",producto.stock);
+            printf("Stock mínimo: %d\n",producto.minStock);
+            printf("Precio por unidad: %.2f\n",producto.precioUnidad);
+            printf("Descuento del producto (en porcentaje): %d\n",producto.descuento);
+
+            productoExiste = true;
+
+        }
+        
+    }
+
+    if (!productoExiste) {
+
+        printf("El codigo introducido no corresponde a ningún producto existente\n");
+
+    }
+
+}
+
+void busquedaProducto() {
+
+    Producto producto;
+    
+    printf("Introduce el código del producto: ");
+    scanf("%s",&producto.cod);
+
+    for (int i = 0; i < MAX_PRODUCTOS; i++) {
+
+        if (producto.cod == productos[i].cod) {
+
+            printf("Datos del producto:\n");
+            printf("Código: %s\n",producto.cod);
+            printf("Descripción: %s\n",producto.descripcion);
+            printf("Stock: %d\n",producto.stock);
+            printf("Stock mínimo: %d\n",producto.minStock);
+            printf("Precio por unidad: %.2f\n",producto.precioUnidad);
+            printf("Descuento del producto (en porcentaje): %d\n",producto.descuento);
+
+        }
+        
+    }
+
+}
+
 void crearnuevoticket(){
+    Ticket ticket;
+    Producto producto;
 char respuesta,confirmacion;
-int cont = 0,linea;
+int cont = 0,linea,cod,unidades;
+
+float preciodescuento = 0;
+
 do{
 printf("Introduce la línea de ticket:\n");
-scanf("%d",linea);
+scanf("%d",ticket.lineas);
+
+
+printf("Introduce el código del producto:\n");
+scanf("%d",cod);
+do{
+printf("Introduce el nº de unidades a vender:\n");
+scanf("%d",unidades);
+if(unidades > producto.stock){
+    printf("ERROR: unidades > productos\n");
+}
+
+}while(unidades > producto.stock);
+for(int i = 0; i < MAX_PRODUCTOS;i++){
+
+if(cod == productos[i].cod){
+    
+printf("Descripción:%c\n",productos[i].descripcion);
+printf("Stock:%d\n",productos[i].stock);
+printf("Precio por unidad: %f",productos[i].precioUnidad);
+if(productos[i].descuento != 0){
+    printf("Descuento: %d",productos[i].descuento);
+    preciodescuento = productos[i].precioUnidad - (productos[i].precioUnidad * (productos[i].descuento / 100));
+    printf("Precio con descuento: %f\n",preciodescuento);
+}
+
+
+
+    
+}
+
+
+}
+
+
 
 printf("¿Desea añadir otra línea?:S/N: \n");
 scanf("%c",respuesta);
@@ -104,7 +237,7 @@ if(respuesta == 'N'){
     
 }else if(respuesta == 'S'){
 
-
+    
     
 }
 
@@ -113,7 +246,6 @@ cont++;
 
 
 
-    
 }
 
 
@@ -126,10 +258,11 @@ cont++;
 
 
 
-int main() {
+ int main() {
 
-    int ;
+     int ;
 
-    return 0;
-    
+return 0;
+
+        
 }
