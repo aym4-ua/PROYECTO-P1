@@ -13,13 +13,6 @@ typedef struct {
     int descuento;
 } Producto;
 
-typedef struct {
-    int cod;
-    int fecha;
-    int hora;
-    float importeTotal;
-    int lineas;
-} Ticket;
 
 typedef struct {
     char cod[4];
@@ -28,6 +21,17 @@ typedef struct {
     float precioUnidad;
     int descuento;
 } LineaTicket;
+
+
+typedef struct {
+    int cod;
+    int fecha;
+    int hora;
+    float importeTotal;
+    LineaTicket lineas[];
+} Ticket;
+
+
 
 Producto productos[MAX_PRODUCTOS];
 
@@ -89,7 +93,7 @@ void bajaProducto(int numProductos) {
     bool productoExiste = false;
     
     printf("Introduce el código del producto: ");
-    scanf("%s",&producto.cod);
+    scanf("%s",producto.cod);
 
     for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
@@ -147,7 +151,7 @@ void modificarProducto() {
     bool productoExiste = false;
 
     printf("Introduce el código de un producto: ");
-    scanf("%s",&producto.cod);
+    scanf("%s",producto.cod);
 
     for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
@@ -166,14 +170,14 @@ void modificarProducto() {
             printf("Modifica los datos del producto:\n");
 
             printf("Nueva descripción: ");
-            scanf("%s",&producto.descripcion);
+            scanf("%s",producto.descripcion);
 
             for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
                 if (producto.descripcion == productos[i].descripcion) {
 
                     printf("Descripción ya existente, introduce otra: ");
-                    scanf("%s",&producto.descripcion);
+                    scanf("%s",producto.descripcion);
 
                 }
                 
@@ -207,13 +211,13 @@ void busquedaProducto() {
 
     Producto producto;
     bool productoExiste = false;
-
+    char cod[4];
     printf("Introduce el código de un producto: ");
-    scanf("%s",&producto.cod);
+    scanf("%s",cod);
 
     for (int i = 0; i < MAX_PRODUCTOS; i++) {
 
-        if (producto.cod == productos[i].cod) {
+        if (cod == productos[i].cod) {
 
             printf("Datos del producto:\n");
             printf("Código: %s\n",producto.cod);
@@ -316,30 +320,31 @@ void crearnuevoticket(Ticket tickets[], int *numTickets) {
     scanf(" %c", &confirmacion);
 
     if (confirmacion == 'S' || confirmacion == 's') {
-        ticket.lineas = totalLineas;
         ticket.importeTotal = importeTotal;
 
         tickets[*numTickets] = ticket; 
         (*numTickets)++; 
-
-        printf("Ticket creado con éxito.\n");
-        printf("Código del ticket: %d\n", ticket.cod);
-        printf("Fecha: %d\n", ticket.fecha);
-        printf("Hora: %d\n", ticket.hora);
-        printf("Total de líneas: %d\n", ticket.lineas);
-        printf("Importe total: %.2f\n", ticket.importeTotal);
-
-        for (int i = 0; i < totalLineas; i++) {
-            printf("Línea %d:\n", i + 1);
-            printf("  Producto: %s\n", lineasTicket[i].descripcion);
-            printf("  Unidades: %d\n", lineasTicket[i].unidadesVendidas);
-            printf("  Precio unidad: %.2f\n", lineasTicket[i].precioUnidad);
-            printf("  Descuento: %d%%\n", lineasTicket[i].descuento);
-        }
     } else {
         printf("Creación del ticket cancelada.\n");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void buscarOeliminarTicket(Ticket tickets[], int *numTickets) {
@@ -373,7 +378,6 @@ void buscarOeliminarTicket(Ticket tickets[], int *numTickets) {
     printf("Fecha: %d\n", ticket.fecha);
     printf("Hora: %d\n", ticket.hora);
     printf("Importe total: %.2f\n", ticket.importeTotal);
-    printf("Líneas en el ticket: %d\n", ticket.lineas);
     printf("--------------------------------------\n");
 
     char opcion;
